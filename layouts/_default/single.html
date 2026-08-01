@@ -16,6 +16,7 @@
             {{ partial "toc.html" .}}
             <div class="page-content">
                 {{ .Content }}
+                {{ partial "series-nav.html" . }}
             </div>
             {{ partial "post-tip.html" . }}
         </article>
