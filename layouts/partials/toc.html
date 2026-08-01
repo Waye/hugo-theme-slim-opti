@@ -11,8 +11,17 @@
             {{ $tocOpen = "open" }}
         {{ end }}
     {{ end }}
+
     <details class="toc" {{ $tocOpen }}>
-        <summary><b>{{ T "single.table_of_contents" }}</b></summary>
+        <summary>
+            <b class="toc-label">{{ T "single.table_of_contents" }}</b>
+            <span
+                class="toc-current"
+                aria-live="polite"
+                aria-atomic="true"
+            ></span>
+        </summary>
+
         {{ .TableOfContents }}
     </details>
 {{- end -}}

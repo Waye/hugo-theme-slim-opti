@@ -1,0 +1,25 @@
+{{- $toc := .Site.Params.toc -}}
+
+{{- if isset .Params "toc" -}}
+    {{ $toc = .Params.toc }}
+{{- end -}}
+
+{{- if $toc -}}
+    {{- $tocTitle := T "single.table_of_contents" -}}
+
+    <aside
+        class="post-toc-sidebar"
+        aria-labelledby="post-toc-sidebar-title"
+    >
+        <div class="post-toc-sidebar-inner">
+            <p
+                class="post-toc-sidebar-title"
+                id="post-toc-sidebar-title"
+            >
+                {{ $tocTitle }}
+            </p>
+
+            {{ .TableOfContents | replaceRE `id="TableOfContents"` `id="TableOfContentsSidebar"` | safeHTML }}
+        </div>
+    </aside>
+{{- end -}}

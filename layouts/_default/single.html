@@ -1,28 +1,43 @@
 {{ define "main" }}
-<div class="wrapper post">
-    <main class="page-content" aria-label="Content">
-        <article>
-            <header class="header">
-                <h1 class="header-title">{{ .Title }}</h1>
-                {{ $configDateFormat := .Site.Params.dateFormat | default ":date_medium" }}
-                {{ with .Date }}
-                {{ $ISO_time := dateFormat "2006-01-02T15:04:05-07:00" . }}
-                <div class="post-meta">
-                    <time datetime="{{ $ISO_time }}" itemprop="datePublished"> {{ . | time.Format $configDateFormat }} </time>
+{{- $toc := .Site.Params.toc -}}
+{{- if isset .Params "toc" -}}
+    {{ $toc = .Params.toc }}
+{{- end -}}
+<div class="wrapper post{{ if $toc }} post-has-toc{{ end }}">
+    <div class="post-layout">
+        <main class="page-content post-main" aria-label="Content">
+            <article>
+                <header class="header">
+                    <h1 class="header-title">{{ .Title }}</h1>
+                    {{ $configDateFormat := .Site.Params.dateFormat | default ":date_medium" }}
+                    {{ with .Date }}
+                    {{ $ISO_time := dateFormat "2006-01-02T15:04:05-07:00" . }}
+                    <div class="post-meta">
+                        <time datetime="{{ $ISO_time }}" itemprop="datePublished">
+                            {{ . | time.Format $configDateFormat }}
+                        </time>
+                    </div>
+                    {{ end }}
+                </header>
+
+                {{ partial "post-map.html" . }}
+                {{ partial "toc.html" . }}
+
+                <div class="page-content">
+                    {{ .Content }}
+                    {{ partial "series-nav.html" . }}
                 </div>
-                {{ end }}
-            </header>
-            {{ partial "post-map.html" . }}
-            {{ partial "toc.html" .}}
-            <div class="page-content">
-                {{ .Content }}
-                {{ partial "series-nav.html" . }}
-            </div>
-            {{ partial "post-tip.html" . }}
-        </article>
-        {{- partial "comments.html" . -}}
-    </main>
+
+                {{ partial "post-tip.html" . }}
+            </article>
+
+            {{- partial "comments.html" . -}}
+        </main>
+
+        {{ partial "toc-sidebar.html" . }}
+    </div>
 </div>
+
 {{- $tocjs := resources.Get "js/post-toc.js" | minify | fingerprint -}}
 <script src="{{ $tocjs.RelPermalink }}" defer></script>
 {{ end }}

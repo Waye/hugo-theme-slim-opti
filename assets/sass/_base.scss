@@ -16,7 +16,7 @@
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
 }
 
@@ -43,7 +43,7 @@ figure {
 // Basic styling
 body {
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   color: $text-base-color;
   background-color: $white;
