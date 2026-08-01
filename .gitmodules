@@ -1,0 +1,3 @@
+[submodule "themes/hugo-theme-slim-opti"]
+	path = themes/hugo-theme-slim-opti
+	url = https://github.com/Waye/hugo-theme-slim-opti.git

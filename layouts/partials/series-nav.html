@@ -1,0 +1,21 @@
+{{ with .Params.series }}
+  {{ $current := $.Permalink }}
+  {{ $name := index . 0 }}
+  {{ $posts := where site.RegularPages "Params.series" "intersect" (slice $name) }}
+  {{ if gt (len $posts) 1 }}
+  <nav class="series-nav">
+    <h3>系列:{{ $name }}</h3>
+    <ol>
+      {{ range sort $posts "Weight" }}
+        <li>
+          {{ if eq .Permalink $current }}
+            <strong>{{ .Title }}</strong>(当前)
+          {{ else }}
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          {{ end }}
+        </li>
+      {{ end }}
+    </ol>
+  </nav>
+  {{ end }}
+{{ end }}
